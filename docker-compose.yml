@@ -1,0 +1,30 @@
+version: '3.3'
+services:
+ php:
+  image: php:8.2.10-apache
+  container_name: projecteUf3
+  volumes:
+    - ./:/var/www/html
+  expose:
+    - 80
+  ports:
+    - 80:80
+  command:
+    - bash
+    - -c
+    - docker-php-ext-install pdo_mysql && a2enmod rewrite && apache2-foreground
+ mysql:
+  image: mysql:latest
+  environment:
+   MYSQL_ROOT_PASSWORD: "alexllastanos"
+   MYSQL_DATABASE: "foro"
+   MYSQL_USER: "alexllastanos"
+   MYSQL_PASSWORD: "alexllastanos"
+  ports:
+   - "9999:3306"
+ phpmyadmin:
+  image: phpmyadmin/phpmyadmin
+  environment:
+   PMA_HOST: mysql
+  ports:
+   - "8090:80"
